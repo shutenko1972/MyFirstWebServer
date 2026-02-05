@@ -184,7 +184,7 @@ class MyHandler(BaseHTTPRequestHandler):
                         <h3>🌐 Веб-сервер</h3>
                         <p>Python обрабатывает HTTP запросы и отправляет HTML страницу</p>
                     </div>
-                    <div class="feature">   --------------------------------------------------------------------------------
+                    <div class="feature">
                         <h3>🎨 Стили CSS</h3>
                         <p>Красивый дизайн с градиентами и анимациями</p>
                     </div>
@@ -193,3 +193,116 @@ class MyHandler(BaseHTTPRequestHandler):
                         <p>Сайт выглядит отлично на всех устройствах</p>
                     </div>
                 </div>
+                
+                <h2>Как это работает:</h2>
+                
+                <div class="code-block">
+    # 1. Python создаёт HTTP сервер<br>
+    server = HTTPServer(('localhost', 5000), MyHandler)<br>
+    <br>
+    # 2. Браузер делает запрос<br>
+    # 3. Python отправляет HTML страницу <br>
+    # 4. Вы видите этот прекрасный сайт!<br>
+                </div>
+                
+                <div class="buttons">
+                <button onclick="showMessage()">Нажми меня!</button>
+                <button onclick="changeColor()">Сменить цвет</button>
+                <button onclick="showTime()">Показать время</button>
+                </div>
+                
+                <div id="message" style="margin-top: 20px;"></div>
+                
+                <div class="footer">
+                <p>Сервер запущен: <span id="time"></span></p>
+                <p>Создано на Python | Мой первый шаг в веб-разработке!</p>
+                </div>
+                </div>
+                
+                <script>
+                // JavaScript для интерактивности
+                document.getElementById('time').textContent = new Date().toLocaleTimeString();
+                
+                function showMessage() {
+                const messages = [
+                "Отличная работа!",
+                "Python - это круто!",
+                "Следующий шаг - Django или Flask",
+                "Продолжайте в том же духе!"
+                ];
+                const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+                document.getElementById('message').innerHTML =
+                '<div class="success">' + randomMessage + '</div>';
+                }
+                
+                function changeColor() {
+                const colors = ['#667eea', '#764ba2', '#f56565', '#48bb78', '#ed8936'];
+                const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                document.querySelector('button').style.background = randomColor;
+                document.getElementById('message').innerHTML =
+                '<div class="success">Цвет изменён!</div>';
+                }
+                
+                function showTime() {
+                const now = new Date();
+                const timeString = now.toLocaleTimeString();
+                const dateString = now.toLocaleDateString('ru-RU');
+                document.getElementById('message').innerHTML =
+                '<div class="success">' + dateString + '<br>' + timeString + '</div>';
+                }
+                
+                // Обновляем время каждую секунду
+                setInterval(() => {
+                document.getElementById('time').textContent = new Date().toLocaleTimeString();
+                }, 1000);
+                </script>
+                </body>
+                </html>
+                """
+                
+        # Отправляем HTML страницу
+        self.wfile.write(html_content.encode('utf-8'))
+                
+    def log_message(self, format, *args):
+        """Выводим логи в консоль (можно отключить)"""
+        print(f"[{time.strftime('%H:%M:%S')}] Кто-то зашёл на сайт!")
+    
+def main():
+    """Запускаем наш веб-сервер"""
+    print("=" * 60)
+    print("ЗАПУСК МОЕГО ПЕРВОГО ВЕБ-СЕРВЕРА НА PYTHON")
+    print("=" * 60)            
+    
+    # Настройки сервера
+    host = 'localhost'  # Адрес сервера
+    port = 5000         # Порт сервера
+    
+    # Создаём сервер
+    server = HTTPServer((host, port), MyHandler)
+    
+    print(f" Сервер успешно запущен!")
+    print(f" Открываем браузер...")
+    
+    # Открываем браузер автоматически
+    webbrowser.open(f'http://{host}:{port}')
+    
+    print("\n" + "=" * 60)
+    print("ЧТО ДЕЛАТЬ ДАЛЬШЕ:")
+    print("1. Посмотрите на сайт в браузере")
+    print("2. Попробуйте кнопки на сайте")
+    print("3. Вернитесь в консоль")
+    print("4. Нажмите Ctrl+C для остановки сервера")
+    print("=" * 60)
+    print("\n Сервер работает. Нажмите Ctrl+C для остановки...\n")
+    
+    try:
+        # Запускаем сервер (он будет работать до принудительной остановки)
+        server.serve_forever()
+    except KeyboardInterrupt:
+        # Если нажали Ctrl+C
+        print("\n Останавливаем сервер...")
+        print("\n Поздравляю! Вы успешно запустили свой первый веб-сайт на Python!")
+        
+# Запускаем программу        
+if __name__ == '__main__':
+    main()
